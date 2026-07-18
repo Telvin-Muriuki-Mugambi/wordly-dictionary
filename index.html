@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wordly — a dictionary that keeps your place</title>
+  <meta name="description" content="Look up any word: pronunciation, definitions, examples, and synonyms, in one page." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-theme="day">
+
+  <div class="drawer-rail" aria-hidden="true"></div>
+
+  <header class="site-head">
+    <div class="site-head__mark">
+      <span class="site-head__label">No. 01 — General Reference</span>
+      <h1 class="site-head__title">Wordly</h1>
+      <p class="site-head__tagline">a dictionary that keeps your place</p>
+    </div>
+
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+      <span class="theme-toggle__track">
+        <span class="theme-toggle__thumb"></span>
+      </span>
+      <span class="theme-toggle__text" id="theme-toggle-text">Day reading</span>
+    </button>
+  </header>
+
+  <main class="layout">
+
+    <section class="search-panel" aria-label="Search for a word">
+      <form id="search-form" class="catalog-search" autocomplete="off">
+        <label for="word-input" class="catalog-search__label">Search the catalog</label>
+        <div class="catalog-search__row">
+          <input
+            id="word-input"
+            name="word"
+            type="text"
+            class="catalog-search__input"
+            placeholder="Type a word, e.g. “ephemeral”"
+            aria-describedby="search-status"
+            required
+          />
+          <button type="submit" class="catalog-search__button">
+            Look up
+          </button>
+        </div>
+      </form>
+      <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+
+      <div class="saved-rail" aria-label="Saved words">
+        <h2 class="saved-rail__title">Bookmarked cards</h2>
+        <ul id="saved-list" class="saved-rail__list">
+          <li class="saved-rail__empty" id="saved-empty">Nothing saved yet. Bookmark a card to keep it here.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="result-panel" aria-label="Word result" aria-live="polite">
+
+      <div id="intro-state" class="state-block intro-block">
+        <p class="intro-block__eyebrow">Drawer is empty</p>
+        <p class="intro-block__text">Search for a word above and its card will appear here — pronunciation, part of speech, definitions, and a few words that live nearby.</p>
+      </div>
+
+      <div id="loading-state" class="state-block loading-block" hidden>
+        <div class="loading-block__spinner" aria-hidden="true"></div>
+        <p>Pulling the card…</p>
+      </div>
+
+      <div id="error-state" class="state-block error-block" hidden>
+        <p class="error-block__eyebrow">Card not found</p>
+        <p id="error-message" class="error-block__text"></p>
+      </div>
+
+      <article id="card" class="index-card" hidden>
+        <div class="index-card__ribbon" id="ribbon" hidden>Bookmarked</div>
+
+        <button id="bookmark-btn" class="bookmark-btn" type="button" aria-pressed="false">
+          <span id="bookmark-icon" aria-hidden="true">☆</span>
+          <span id="bookmark-label">Save this card</span>
+        </button>
+
+        <header class="index-card__head">
+          <h2 id="word-title" class="index-card__word"></h2>
+          <div class="index-card__phonetics">
+            <span id="phonetic-text" class="index-card__ipa"></span>
+            <button id="audio-btn" class="audio-btn" type="button" hidden aria-label="Play pronunciation">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"/>
+                <path d="M16.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                <path d="M19 6a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.6"/>
+              </svg>
+            </button>
+            <audio id="audio-player" hidden></audio>
+          </div>
+        </header>
+
+        <div id="meanings" class="index-card__meanings"></div>
+
+        <footer class="index-card__foot">
+          <p class="index-card__source-label">Source</p>
+          <ul id="source-list" class="index-card__sources"></ul>
+        </footer>
+      </article>
+
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <p>Wordly draws definitions from the Free Dictionary API. Built as a learning project — not a substitute for a bound dictionary on a rainy afternoon.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
