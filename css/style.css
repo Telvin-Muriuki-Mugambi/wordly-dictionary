@@ -51,6 +51,12 @@
 
 html { color-scheme: light dark; }
 
+/* The `hidden` attribute must always win over component classes like
+   .state-block or .audio-btn that set their own `display`. Without this,
+   author rules of equal specificity beat the browser's default
+   `[hidden] { display: none }`, and "hidden" panels can still render. */
+[hidden] { display: none !important; }
+
 body {
   margin: 0;
   min-height: 100vh;
